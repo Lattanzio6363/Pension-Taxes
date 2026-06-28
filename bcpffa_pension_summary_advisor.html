@@ -1,0 +1,715 @@
+<!-- ... existing code ... -->
+            <button onclick="switchTab('ei-section')" id="tab-ei-section" class="tab-btn px-4 py-3 font-semibold text-sm rounded-t-lg border-b-2 border-transparent text-gray-500 hover:text-manulife transition duration-150">
+                Employment Insurance (EI)
+            </button>
+            <button onclick="switchTab('cra-tax')" id="tab-cra-tax" class="tab-btn px-4 py-3 font-semibold text-sm rounded-t-lg border-b-2 border-transparent text-gray-500 hover:text-manulife transition duration-150">
+                CRA & BC Tax Brackets
+            </button>
+            <button onclick="switchTab('tax-infographic')" id="tab-tax-infographic" class="tab-btn px-4 py-3 font-semibold text-sm rounded-t-lg border-b-2 border-transparent text-gray-500 hover:text-manulife transition duration-150 flex items-center gap-1.5">
+                <span class="text-emerald-600">📊</span> Tax Visualizer
+            </button>
+            <button onclick="switchTab('estimator')" id="tab-estimator" class="tab-btn px-4 py-3 font-semibold text-sm rounded-t-lg border-b-2 border-transparent text-gray-500 hover:text-manulife transition duration-150">
+                Interactive 2026 Estimator
+            </button>
+            <button onclick="switchTab('ai-advisor')" id="tab-ai-advisor" class="tab-btn px-4 py-3 font-bold text-sm rounded-t-lg text-white bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-700 hover:to-teal-800 sm:ml-auto shadow-md flex items-center gap-2 transition duration-150">
+<!-- ... existing code ... -->
+        <!-- TAB 5: CRA & BC Tax Brackets -->
+        <div id="content-cra-tax" class="tab-content hidden">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- ... existing code ... -->
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                        <span class="text-[10px] bg-blue-100 text-blue-800 font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                            Low Income Support
+                        </span>
+                        <h4 class="font-bold text-gray-800 text-base mt-3">BC Tax Reduction Credit</h4>
+                        <p class="text-3xl font-black text-blue-900 mt-2">$690</p>
+                        <p class="text-xs text-gray-500 leading-relaxed font-light mt-3">
+                            Budget 2026 increased the maximum BC tax reduction credit from $575 to <strong>$690</strong>.
+                        </p>
+                        <ul class="text-xs text-gray-500 space-y-1 list-disc pl-4 mt-2 font-light">
+                            <li>Fully available for individuals with net income below <strong>$25,570</strong>.</li>
+                            <li>Phased out gradually at a rate of 3.56% on income above $25,570.</li>
+                            <li>Completely phased out for incomes above <strong>$44,952</strong>.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 5.5: Interactive Tax Infographic -->
+        <div id="content-tax-infographic" class="tab-content hidden">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-4 bg-slate-900 text-white p-4 rounded-2xl mb-6 w-full shadow-md">
+                <div>
+                    <h3 class="text-sm font-bold text-slate-300">Interactive Dynamic Dashboard</h3>
+                    <p class="text-[10px] text-slate-400">Linked to Gross Income inputs below</p>
+                </div>
+                <div class="flex items-center gap-4 sm:gap-6 text-sm w-full md:w-auto justify-between md:justify-end">
+                    <div>
+                        <span class="text-slate-400 text-xs block">Marginal Rate</span>
+                        <span id="info-stat-marginal" class="font-black text-teal-400 text-base">0.00%</span>
+                    </div>
+                    <div class="h-8 w-[1px] bg-slate-800 hidden sm:block"></div>
+                    <div>
+                        <span class="text-slate-400 text-xs block">Average Tax Rate</span>
+                        <span id="info-stat-average" class="font-black text-teal-300 text-base">0.00%</span>
+                    </div>
+                    <div class="h-8 w-[1px] bg-slate-800 hidden sm:block"></div>
+                    <div>
+                        <span class="text-slate-400 text-xs block">Take-home %</span>
+                        <span id="info-stat-takehome" class="font-black text-emerald-400 text-base">0.00%</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 w-full">
+                <!-- LEFT COLUMN: Input & Big Metrics -->
+                <div class="lg:col-span-4 flex flex-col gap-6">
+                    <!-- Interactive Calculator Input -->
+                    <div class="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
+                        <h2 class="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
+                            <span class="text-manulife font-extrabold">01.</span> Set Annual Income
+                        </h2>
+                        <p class="text-gray-500 text-xs mb-4">
+                            Drag the slider or type your gross annual salary to watch the brackets fill up in real time.
+                        </p>
+
+                        <!-- Income Input Box -->
+                        <div class="relative mb-5">
+                            <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 font-semibold text-lg">$</span>
+                            <input
+                                type="text"
+                                id="info-gross-income"
+                                value="75,000"
+                                class="w-full bg-gray-50 border border-gray-200 focus:border-manulife rounded-xl py-3 pl-8 pr-4 text-gray-950 text-xl font-black focus:outline-none focus:ring-2 focus:ring-manulife/20 transition-all text-right"
+                                oninput="handleInfoIncomeInput(this.value)"
+                            />
+                        </div>
+
+                        <!-- Fast-Selector Sliders -->
+                        <input
+                            type="range"
+                            id="info-income-slider"
+                            min="15000"
+                            max="350000"
+                            step="1000"
+                            value="75000"
+                            class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-manulife mb-6 focus:outline-none"
+                            oninput="handleInfoSliderInput(this.value)"
+                        />
+
+                        <!-- Quick Income Anchors -->
+                        <div class="grid grid-cols-4 gap-2 text-center text-[10px] text-gray-500 mb-2">
+                            <button onclick="setInfoIncome(45000)" class="bg-gray-50 hover:bg-gray-100 border border-gray-200 hover:border-gray-300 py-1.5 rounded-lg transition font-bold text-gray-700">
+                                $45k
+                            </button>
+                            <button onclick="setInfoIncome(85000)" class="bg-gray-50 hover:bg-gray-100 border border-gray-200 hover:border-gray-300 py-1.5 rounded-lg transition font-bold text-gray-700">
+                                $85k
+                            </button>
+                            <button onclick="setInfoIncome(150000)" class="bg-gray-50 hover:bg-gray-100 border border-gray-200 hover:border-gray-300 py-1.5 rounded-lg transition font-bold text-gray-700">
+                                $150k
+                            </button>
+                            <button onclick="setInfoIncome(250000)" class="bg-gray-50 hover:bg-gray-100 border border-gray-200 hover:border-gray-300 py-1.5 rounded-lg transition font-bold text-gray-700">
+                                $250k
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Interactive Pay Breakdown -->
+                    <div class="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm flex-grow flex flex-col justify-between">
+                        <div>
+                            <h2 class="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
+                                <span class="text-manulife font-extrabold">02.</span> Salary Breakdown
+                            </h2>
+
+                            <!-- Stacked Percentage Visual Bar -->
+                            <div class="h-6 w-full bg-gray-100 rounded-full overflow-hidden flex mb-6 border border-gray-200">
+                                <div id="info-bar-takehome" class="bg-gradient-to-r from-emerald-500 to-teal-500 h-full transition-all duration-300" title="Take-home Pay"></div>
+                                <div id="info-bar-fedtax" class="bg-indigo-500 h-full transition-all duration-300" title="Federal Tax"></div>
+                                <div id="info-bar-provtax" class="bg-sky-500 h-full transition-all duration-300" title="Provincial Tax"></div>
+                                <div id="info-bar-cpp" class="bg-amber-500 h-full transition-all duration-300" title="CPP"></div>
+                                <div id="info-bar-ei" class="bg-rose-500 h-full transition-all duration-300" title="EI"></div>
+                            </div>
+
+                            <!-- Metric Rows -->
+                            <div class="space-y-4">
+                                <!-- Net Pay -->
+                                <div class="flex items-center justify-between p-3 rounded-xl bg-emerald-50 border border-emerald-100/60">
+                                    <div class="flex items-center gap-2">
+                                        <div class="w-3.5 h-3.5 rounded bg-emerald-500"></div>
+                                        <span class="text-gray-700 text-sm font-bold">Take-home Pay</span>
+                                    </div>
+                                    <div class="text-right">
+                                        <div id="info-val-net" class="font-black text-emerald-700 text-base">$0.00</div>
+                                        <div id="info-pct-net" class="text-[10px] text-emerald-600 font-semibold">0.00%</div>
+                                    </div>
+                                </div>
+
+                                <!-- Federal Tax -->
+                                <div class="flex items-center justify-between p-2.5 rounded-xl bg-indigo-50 border border-indigo-100/60">
+                                    <div class="flex items-center gap-2">
+                                        <div class="w-3.5 h-3.5 rounded bg-indigo-500"></div>
+                                        <span class="text-gray-700 text-sm">Federal Income Tax</span>
+                                    </div>
+                                    <div class="text-right">
+                                        <div id="info-val-fed" class="font-bold text-indigo-700 text-sm">$0.00</div>
+                                        <div id="info-pct-fed" class="text-[10px] text-indigo-500 font-semibold">0.00%</div>
+                                    </div>
+                                </div>
+
+                                <!-- BC Tax -->
+                                <div class="flex items-center justify-between p-2.5 rounded-xl bg-sky-50 border border-sky-100/60">
+                                    <div class="flex items-center gap-2">
+                                        <div class="w-3.5 h-3.5 rounded bg-sky-500"></div>
+                                        <span class="text-gray-700 text-sm">BC Income Tax</span>
+                                    </div>
+                                    <div class="text-right">
+                                        <div id="info-val-bc" class="font-bold text-sky-700 text-sm">$0.00</div>
+                                        <div id="info-pct-bc" class="text-[10px] text-sky-500 font-semibold">0.00%</div>
+                                    </div>
+                                </div>
+
+                                <!-- CPP Deductions -->
+                                <div class="flex items-center justify-between p-2.5 rounded-xl bg-amber-50 border border-amber-100/60">
+                                    <div class="flex items-center gap-2">
+                                        <div class="w-3.5 h-3.5 rounded bg-amber-500"></div>
+                                        <div>
+                                            <span class="text-gray-700 text-sm font-semibold block">CPP &amp; CPP2</span>
+                                            <span id="info-cpp2-badge" class="hidden text-[9px] bg-amber-500/10 text-amber-700 px-1.5 py-0.5 rounded font-bold uppercase tracking-wider">
+                                                CPP2 Activated
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="text-right">
+                                        <div id="info-val-cpp" class="font-bold text-amber-700 text-sm">$0.00</div>
+                                        <div id="info-pct-cpp" class="text-[10px] text-amber-600 font-semibold">0.00%</div>
+                                    </div>
+                                </div>
+
+                                <!-- EI Deductions -->
+                                <div class="flex items-center justify-between p-2.5 rounded-xl bg-rose-50 border border-rose-100/60">
+                                    <div class="flex items-center gap-2">
+                                        <div class="w-3.5 h-3.5 rounded bg-rose-500"></div>
+                                        <span class="text-gray-700 text-sm">Employment Insurance</span>
+                                    </div>
+                                    <div class="text-right">
+                                        <div id="info-val-ei" class="font-bold text-rose-700 text-sm">$0.00</div>
+                                        <div id="info-pct-ei" class="text-[10px] text-rose-500 font-semibold">0.00%</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Summary -->
+                        <div class="mt-6 pt-4 border-t border-gray-200 text-gray-500 text-xs flex justify-between font-bold">
+                            <span class="text-gray-700">Total Combined Deductions:</span>
+                            <span id="info-val-total-deductions" class="text-gray-900">$0.00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RIGHT COLUMN: Progressive Brackets Visualizer & Deep Dives -->
+                <div class="lg:col-span-8 flex flex-col gap-6">
+                    <!-- Section Selector -->
+                    <div class="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-gray-200 pb-4 mb-6">
+                            <div>
+                                <h2 class="text-lg font-bold text-gray-800 flex items-center gap-2">
+                                    <span class="text-manulife font-extrabold">03.</span> Interactive Progressive Brackets
+                                </h2>
+                                <p class="text-gray-500 text-xs mt-0.5">
+                                    Understand how tax brackets stack like buckets. You only pay higher rates on money inside that specific bucket!
+                                </p>
+                            </div>
+
+                            <!-- Tab Switchers -->
+                            <div class="flex bg-gray-100 border border-gray-200 p-1 rounded-xl w-full sm:w-auto">
+                                <button
+                                    id="info-btn-fed-bracket"
+                                    onclick="setInfoBracketTab('federal')"
+                                    class="flex-1 sm:flex-none px-4 py-1.5 rounded-lg text-xs font-bold transition duration-150 bg-indigo-600 text-white shadow-sm"
+                                >
+                                    Federal Brackets
+                                </button>
+                                <button
+                                    id="info-btn-bc-bracket"
+                                    onclick="setInfoBracketTab('bc')"
+                                    class="flex-1 sm:flex-none px-4 py-1.5 rounded-lg text-xs font-bold transition duration-150 text-gray-500 hover:text-gray-950"
+                                >
+                                    BC Provincial
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Brackets Stack visualization -->
+                        <div id="info-brackets-container" class="space-y-4">
+                            <!-- Dynamically filled with JS -->
+                        </div>
+
+                        <!-- Non-Refundable Credits (BPA) explanation -->
+                        <div class="mt-6 p-4 rounded-xl bg-gray-50 border border-gray-200 text-xs text-gray-600 flex items-start gap-3">
+                            <span class="text-manulife text-base">💡</span>
+                            <div id="info-bpa-desc-text">
+                                <!-- Dynamically updated by JS -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- EI and CPP Deep Dive Infographic -->
+                    <div class="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
+                        <h2 class="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
+                            <span class="text-manulife font-extrabold">04.</span> Payroll Deductions Breakdown (2026 Rules)
+                        </h2>
+                        <p class="text-gray-500 text-xs mb-6">
+                            CPP and EI premiums stop being deducted once you reach their respective annual income caps.
+                        </p>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- CPP Box -->
+                            <div class="bg-gray-50 border border-gray-200 rounded-xl p-5 relative overflow-hidden">
+                                <div class="absolute top-0 right-0 p-3 text-gray-150 font-black text-4xl select-none">CPP</div>
+                                <h3 class="text-sm font-bold text-gray-800 mb-2">Canada Pension Plan (CPP &amp; CPP2)</h3>
+                                
+                                <!-- Visual meter -->
+                                <div class="space-y-4 text-xs mt-4">
+                                    <div>
+                                        <div class="flex justify-between text-[11px] mb-1">
+                                            <span class="text-gray-500">Base CPP (5.95% above $3.5k to $74.6k)</span>
+                                            <span id="info-cpp-base-label" class="font-mono text-gray-700 font-bold">$0.00 / $4,230.45</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 h-2 rounded-full overflow-hidden">
+                                            <div id="info-cpp-base-meter" style="width: 0%" class="bg-amber-500 h-full transition-all duration-300"></div>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <div class="flex justify-between text-[11px] mb-1">
+                                            <span class="text-gray-500">CPP2 (4% on $74.6k to $85.0k)</span>
+                                            <span id="info-cpp2-label" class="font-mono text-gray-700 font-bold">$0.00 / $416.00</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 h-2 rounded-full overflow-hidden">
+                                            <div id="info-cpp2-meter" style="width: 0%" class="bg-orange-500 h-full transition-all duration-300"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <p class="text-[10px] text-gray-500 mt-4 leading-relaxed">
+                                    The CPP enhancement has a second bracket (CPP2) targeting high-middle earners. Once your earnings exceed $74,600, your base contribution stops and you contribute 4% on earnings up to $85,000.
+                                </p>
+                            </div>
+
+                            <!-- EI Box -->
+                            <div class="bg-gray-50 border border-gray-200 rounded-xl p-5 relative overflow-hidden">
+                                <div class="absolute top-0 right-0 p-3 text-gray-150 font-black text-4xl select-none">EI</div>
+                                <h3 class="text-sm font-bold text-gray-800 mb-2">Employment Insurance (EI)</h3>
+
+                                <div class="space-y-4 text-xs mt-4">
+                                    <div>
+                                        <div class="flex justify-between text-[11px] mb-1">
+                                            <span class="text-gray-500">EI Premiums (1.63% up to $68.9k)</span>
+                                            <span id="info-ei-label" class="font-mono text-gray-700 font-bold">$0.00 / $1,123.07</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 h-2 rounded-full overflow-hidden">
+                                            <div id="info-ei-meter" style="width: 0%" class="bg-rose-500 h-full transition-all duration-300"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="bg-white p-3 rounded-lg border border-gray-200 mt-6">
+                                    <div class="flex justify-between text-[11px] text-gray-600">
+                                        <span>Rate:</span>
+                                        <span class="font-bold text-gray-800">1.63%</span>
+                                    </div>
+                                    <div class="flex justify-between text-[11px] text-gray-600 mt-1">
+                                        <span>Max Insurable Limit:</span>
+                                        <span class="font-bold text-gray-800">$68,900.00</span>
+                                    </div>
+                                </div>
+
+                                <p class="text-[10px] text-gray-500 mt-4 leading-relaxed">
+                                    EI premiums are applied at a flat rate of 1.63%. Deductions cap entirely once your annual income reaches $68,900.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 6: Interactive Estimator -->
+        <div id="content-estimator" class="tab-content hidden">
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+<!-- ... existing code ... -->
+    <!-- Interactive Logic Script -->
+    <script>
+        // Layer Data definitions for Retirement Stack Map Inspector
+        let info_income = 75000;
+        let info_activeTab = 'federal';
+
+        const CONSTANTS_INFO = {
+            federalBrackets: [
+                { limit: 58523, rate: 0.14, label: 'First Bracket' },
+                { limit: 117045, rate: 0.205, label: 'Second Bracket' },
+                { limit: 181440, rate: 0.26, label: 'Third Bracket' },
+                { limit: 258482, rate: 0.29, label: 'Fourth Bracket' },
+                { limit: Infinity, rate: 0.33, label: 'Fifth Bracket' }
+            ],
+            fedBPA_max: 16452,
+            fedBPA_min: 14829,
+            fedClawbackStart: 181440,
+            fedClawbackEnd: 258482,
+
+            bcBrackets: [
+                { limit: 50363, rate: 0.056, label: 'First Bracket' },
+                { limit: 100728, rate: 0.077, label: 'Second Bracket' },
+                { limit: 115648, rate: 0.105, label: 'Third Bracket' },
+                { limit: 140430, rate: 0.1229, label: 'Fourth Bracket' },
+                { limit: 190405, rate: 0.147, label: 'Fifth Bracket' },
+                { limit: 265545, rate: 0.168, label: 'Sixth Bracket' },
+                { limit: Infinity, rate: 0.205, label: 'Seventh Bracket' }
+            ],
+            bcBPA: 13216,
+
+            cppExemption: 3500,
+            cppLimit1: 74600, 
+            cppLimit2: 85000, 
+            cppRate1: 0.0595, 
+            cppRate2: 0.0400, 
+            maxCpp1: 4230.45,
+            maxCpp2: 416.00,
+
+            eiLimit: 68900,
+            eiRate: 0.0163, 
+            maxEi: 1123.07
+        };
+
+        function runTaxInfographicCalculations(income) {
+            let cpp1 = 0;
+            if (income > CONSTANTS_INFO.cppExemption) {
+                const pensionable = Math.min(income, CONSTANTS_INFO.cppLimit1) - CONSTANTS_INFO.cppExemption;
+                cpp1 = Math.min(pensionable * CONSTANTS_INFO.cppRate1, CONSTANTS_INFO.maxCpp1);
+            }
+
+            let cpp2 = 0;
+            if (income > CONSTANTS_INFO.cppLimit1) {
+                const additionalPensionable = Math.min(income, CONSTANTS_INFO.cppLimit2) - CONSTANTS_INFO.cppLimit1;
+                cpp2 = Math.min(additionalPensionable * CONSTANTS_INFO.cppRate2, CONSTANTS_INFO.maxCpp2);
+            }
+
+            const totalCpp = cpp1 + cpp2;
+            const totalEi = Math.min(income * CONSTANTS_INFO.eiRate, CONSTANTS_INFO.maxEi);
+
+            let fedBpa = CONSTANTS_INFO.fedBPA_max;
+            if (income > CONSTANTS_INFO.fedClawbackStart) {
+                if (income >= CONSTANTS_INFO.fedClawbackEnd) {
+                    fedBpa = CONSTANTS_INFO.fedBPA_min;
+                } else {
+                    const fraction = (income - CONSTANTS_INFO.fedClawbackStart) / (CONSTANTS_INFO.fedClawbackEnd - CONSTANTS_INFO.fedClawbackStart);
+                    fedBpa = CONSTANTS_INFO.fedBPA_max - fraction * (CONSTANTS_INFO.fedBPA_max - CONSTANTS_INFO.fedBPA_min);
+                }
+            }
+
+            let fedTaxByBracket = [];
+            let cumulativeFedTax = 0;
+            let prevLimitFed = 0;
+
+            CONSTANTS_INFO.federalBrackets.forEach((b, index) => {
+                const currentLimit = b.limit;
+                const bracketRange = currentLimit - prevLimitFed;
+                let taxableInBracket = 0;
+
+                if (income > prevLimitFed) {
+                    taxableInBracket = Math.min(income - prevLimitFed, bracketRange);
+                }
+
+                const grossTax = taxableInBracket * b.rate;
+                fedTaxByBracket.push({
+                    index,
+                    label: b.label,
+                    min: prevLimitFed,
+                    max: currentLimit,
+                    rate: b.rate,
+                    taxable: taxableInBracket,
+                    tax: grossTax
+                });
+
+                cumulativeFedTax += grossTax;
+                prevLimitFed = currentLimit;
+            });
+
+            const federalCredits = (fedBpa + totalEi + totalCpp) * 0.14;
+            const finalFedTax = Math.max(0, cumulativeFedTax - federalCredits);
+
+            let bcTaxByBracket = [];
+            let cumulativeBcTax = 0;
+            let prevLimitBc = 0;
+
+            CONSTANTS_INFO.bcBrackets.forEach((b, index) => {
+                const currentLimit = b.limit;
+                const bracketRange = currentLimit - prevLimitBc;
+                let taxableInBracket = 0;
+
+                if (income > prevLimitBc) {
+                    taxableInBracket = Math.min(income - prevLimitBc, bracketRange);
+                }
+
+                const grossTax = taxableInBracket * b.rate;
+                bcTaxByBracket.push({
+                    index,
+                    label: b.label,
+                    min: prevLimitBc,
+                    max: currentLimit,
+                    rate: b.rate,
+                    taxable: taxableInBracket,
+                    tax: grossTax
+                });
+
+                cumulativeBcTax += grossTax;
+                prevLimitBc = currentLimit;
+            });
+
+            const bcCredits = (CONSTANTS_INFO.bcBPA + totalEi + totalCpp) * 0.056;
+            let finalBcTax = Math.max(0, cumulativeBcTax - bcCredits);
+
+            if (income < 41722) {
+                const maxReduction = 512; 
+                const phaseoutStart = 25570;
+                if (income <= phaseoutStart) {
+                    finalBcTax = Math.max(0, finalBcTax - maxReduction);
+                } else {
+                    const reduction = maxReduction - (income - phaseoutStart) * 0.0356;
+                    finalBcTax = Math.max(0, finalBcTax - Math.max(0, reduction));
+                }
+            }
+
+            const totalDeductions = finalFedTax + finalBcTax + totalCpp + totalEi;
+            const netIncome = Math.max(0, income - totalDeductions);
+            const averageTaxRate = income > 0 ? (totalDeductions / income) * 100 : 0;
+
+            let fedMarginal = 0;
+            for (let b of CONSTANTS_INFO.federalBrackets) {
+                if (income < b.limit) {
+                    fedMarginal = b.rate;
+                    break;
+                }
+            }
+            let bcMarginal = 0;
+            for (let b of CONSTANTS_INFO.bcBrackets) {
+                if (income < b.limit) {
+                    bcMarginal = b.rate;
+                    break;
+                }
+            }
+            const cppMarginal = (income >= CONSTANTS_INFO.cppExemption && income < CONSTANTS_INFO.cppLimit1) ? CONSTANTS_INFO.cppRate1 
+                             : (income >= CONSTANTS_INFO.cppLimit1 && income < CONSTANTS_INFO.cppLimit2) ? CONSTANTS_INFO.cppRate2 : 0;
+            const eiMarginal = (income < CONSTANTS_INFO.eiLimit) ? CONSTANTS_INFO.eiRate : 0;
+
+            const marginalRate = (fedMarginal + bcMarginal + cppMarginal + eiMarginal) * 100;
+
+            return {
+                cpp1,
+                cpp2,
+                totalCpp,
+                totalEi,
+                fedBpa,
+                fedTaxByBracket,
+                cumulativeFedTax,
+                federalCredits,
+                finalFedTax,
+                bcTaxByBracket,
+                cumulativeBcTax,
+                bcCredits,
+                finalBcTax,
+                totalDeductions,
+                netIncome,
+                averageTaxRate,
+                marginalRate,
+                fedMarginal,
+                bcMarginal,
+                cppMarginal,
+                eiMarginal
+            };
+        }
+
+        function setInfoIncome(amount) {
+            info_income = parseFloat(amount);
+            document.getElementById('info-gross-income').value = Math.round(info_income).toLocaleString('en-CA');
+            document.getElementById('info-income-slider').value = info_income;
+            updateTaxInfographicUI();
+        }
+
+        function handleInfoIncomeInput(value) {
+            const cleanVal = parseFloat(value.replace(/[^0-9]/g, ''));
+            info_income = isNaN(cleanVal) ? 0 : cleanVal;
+            document.getElementById('info-income-slider').value = info_income;
+            updateTaxInfographicUI();
+        }
+
+        function handleInfoSliderInput(value) {
+            info_income = parseFloat(value);
+            document.getElementById('info-gross-income').value = Math.round(info_income).toLocaleString('en-CA');
+            updateTaxInfographicUI();
+        }
+
+        function setInfoBracketTab(tab) {
+            info_activeTab = tab;
+            const fedBtn = document.getElementById('info-btn-fed-bracket');
+            const bcBtn = document.getElementById('info-btn-bc-bracket');
+            
+            if (tab === 'federal') {
+                fedBtn.className = "flex-1 sm:flex-none px-4 py-1.5 rounded-lg text-xs font-bold transition duration-150 bg-indigo-600 text-white shadow-sm";
+                bcBtn.className = "flex-1 sm:flex-none px-4 py-1.5 rounded-lg text-xs font-bold transition duration-150 text-gray-500 hover:text-gray-950";
+            } else {
+                fedBtn.className = "flex-1 sm:flex-none px-4 py-1.5 rounded-lg text-xs font-bold transition duration-150 text-gray-500 hover:text-gray-950";
+                bcBtn.className = "flex-1 sm:flex-none px-4 py-1.5 rounded-lg text-xs font-bold transition duration-150 bg-sky-600 text-white shadow-sm";
+            }
+            updateTaxInfographicUI();
+        }
+
+        function updateTaxInfographicUI() {
+            const calcs = runTaxInfographicCalculations(info_income);
+            
+            document.getElementById('info-stat-marginal').innerText = calcs.marginalRate.toFixed(2) + '%';
+            document.getElementById('info-stat-average').innerText = calcs.averageTaxRate.toFixed(2) + '%';
+            
+            const takeHomePct = info_income > 0 ? ((calcs.netIncome / info_income) * 100) : 0;
+            document.getElementById('info-stat-takehome').innerText = takeHomePct.toFixed(2) + '%';
+
+            const netW = info_income > 0 ? (calcs.netIncome / info_income) * 100 : 0;
+            const fedW = info_income > 0 ? (calcs.finalFedTax / info_income) * 100 : 0;
+            const bcW = info_income > 0 ? (calcs.finalBcTax / info_income) * 100 : 0;
+            const cppW = info_income > 0 ? (calcs.totalCpp / info_income) * 100 : 0;
+            const eiW = info_income > 0 ? (calcs.totalEi / info_income) * 100 : 0;
+
+            document.getElementById('info-bar-takehome').style.width = netW + '%';
+            document.getElementById('info-bar-fedtax').style.width = fedW + '%';
+            document.getElementById('info-bar-provtax').style.width = bcW + '%';
+            document.getElementById('info-bar-cpp').style.width = cppW + '%';
+            document.getElementById('info-bar-ei').style.width = eiW + '%';
+
+            document.getElementById('info-val-net').innerText = formatCurrency(calcs.netIncome);
+            document.getElementById('info-pct-net').innerText = takeHomePct.toFixed(2) + '%';
+
+            document.getElementById('info-val-fed').innerText = formatCurrency(calcs.finalFedTax);
+            document.getElementById('info-pct-fed').innerText = (info_income > 0 ? (calcs.finalFedTax / info_income) * 100 : 0).toFixed(2) + '%';
+
+            document.getElementById('info-val-bc').innerText = formatCurrency(calcs.finalBcTax);
+            document.getElementById('info-pct-bc').innerText = (info_income > 0 ? (calcs.finalBcTax / info_income) * 100 : 0).toFixed(2) + '%';
+
+            document.getElementById('info-val-cpp').innerText = formatCurrency(calcs.totalCpp);
+            document.getElementById('info-pct-cpp').innerText = (info_income > 0 ? (calcs.totalCpp / info_income) * 100 : 0).toFixed(2) + '%';
+
+            document.getElementById('info-val-ei').innerText = formatCurrency(calcs.totalEi);
+            document.getElementById('info-pct-ei').innerText = (info_income > 0 ? (calcs.totalEi / info_income) * 100 : 0).toFixed(2) + '%';
+
+            document.getElementById('info-val-total-deductions').innerText = formatCurrency(calcs.totalDeductions);
+
+            const cpp2Badge = document.getElementById('info-cpp2-badge');
+            if (info_income > CONSTANTS_INFO.cppLimit1) {
+                cpp2Badge.classList.remove('hidden');
+                cpp2Badge.classList.add('inline-block');
+            } else {
+                cpp2Badge.classList.add('hidden');
+                cpp2Badge.classList.remove('inline-block');
+            }
+
+            const bracketsContainer = document.getElementById('info-brackets-container');
+            bracketsContainer.innerHTML = '';
+
+            const activeBrackets = info_activeTab === 'federal' ? calcs.fedTaxByBracket : calcs.bcTaxByBracket;
+            const colorClass = info_activeTab === 'federal' ? 'border-indigo-600 bg-indigo-50/50' : 'border-sky-600 bg-sky-50/50';
+            const barColor = info_activeTab === 'federal' ? 'bg-indigo-600' : 'bg-sky-600';
+
+            activeBrackets.forEach((b) => {
+                const bracketMax = b.max === Infinity ? "No Limit" : formatCurrency(b.max);
+                const bracketMin = formatCurrency(b.min);
+                const isActive = info_income > b.min;
+                const isCurrentCap = info_income >= b.min && info_income < b.max;
+                
+                let percentageFilled = 0;
+                if (b.max === Infinity) {
+                    percentageFilled = info_income > b.min ? 100 : 0;
+                } else {
+                    percentageFilled = Math.min(100, Math.max(0, ((info_income - b.min) / (b.max - b.min)) * 100));
+                }
+
+                const bracketCard = document.createElement('div');
+                bracketCard.className = `relative border rounded-xl p-4 transition-all duration-300 ${
+                    isCurrentCap ? colorClass + ' ring-1 ring-offset-1 ' + (info_activeTab === 'federal' ? 'ring-indigo-300' : 'ring-sky-300')
+                    : isActive ? 'border-gray-200 bg-white' : 'border-gray-100 opacity-50 bg-gray-50'
+                }`;
+
+                bracketCard.innerHTML = `
+                    <div class="absolute top-0 left-0 h-1 bg-gray-100 rounded-t-xl w-full overflow-hidden">
+                        <div style="width: ${percentageFilled}%" class="h-full transition-all duration-300 ${barColor}"></div>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <span class="text-xs font-bold text-gray-500 uppercase tracking-wide">${b.label}</span>
+                                <span class="text-xs px-2 py-0.5 rounded-full font-black ${
+                                    isCurrentCap ? (info_activeTab === 'federal' ? 'bg-indigo-600 text-white' : 'bg-sky-600 text-white')
+                                    : isActive ? 'bg-gray-200 text-gray-700' : 'bg-gray-100 text-gray-400'
+                                }">
+                                    ${(b.rate * 100).toFixed(2)}%
+                                </span>
+                            </div>
+                            
+                            <div class="text-sm font-bold text-gray-800 mt-1">
+                                ${bracketMin} to ${bracketMax}
+                            </div>
+                        </div>
+
+                        <div class="text-right">
+                            <div class="text-[10px] text-gray-400 font-semibold uppercase tracking-wider">Taxable inside bracket:</div>
+                            <div class="font-black text-gray-900 text-sm">
+                                ${formatCurrency(b.taxable)}
+                            </div>
+                            <div class="text-xs text-gray-500 mt-0.5">
+                                Owed inside bracket: <strong class="text-gray-800 font-black">${formatCurrency(b.tax)}</strong>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                bracketsContainer.appendChild(bracketCard);
+            });
+
+            const bpaDesc = document.getElementById('info-bpa-desc-text');
+            if (info_activeTab === 'federal') {
+                bpaDesc.innerHTML = `
+                    <strong class="text-gray-950 block mb-1">How the Federal Basic Personal Amount (BPA) saves you taxes:</strong>
+                    In 2026, the Federal BPA is <span class="text-indigo-600 font-extrabold">${formatCurrency(calcs.fedBpa)}</span> (which starts to claw back for incomes over $181,440 down to $14,829). 
+                    This acts as a **0% tax bracket**, generating a rebate credit at the basic rate (14%). Your dynamic 2026 credit is <span class="text-indigo-600 font-extrabold">${formatCurrency(calcs.federalCredits)}</span> (BPA + CPP + EI contributions combined at 14%), reducing your gross federal tax from <strong>${formatCurrency(calcs.cumulativeFedTax)}</strong> to <strong>${formatCurrency(calcs.finalFedTax)}</strong>!
+                `;
+            } else {
+                bpaDesc.innerHTML = `
+                    <strong class="text-gray-950 block mb-1">How the BC Provincial Basic Personal Amount (BPA) saves you taxes:</strong>
+                    In BC, the BPA is <span class="text-sky-600 font-extrabold">${formatCurrency(CONSTANTS_INFO.bcBPA)}</span>. 
+                    These credits apply at the lowest provincial tax rate (5.60% in 2026). Your standard credit is <span class="text-sky-600 font-extrabold">${formatCurrency(calcs.bcCredits)}</span> (BPA + EI + CPP combined at 5.60%), directly trimming down your gross BC tax liabilities!
+                `;
+            }
+
+            document.getElementById('info-cpp-base-label').innerText = `${formatCurrency(calcs.cpp1)} / ${formatCurrency(CONSTANTS_INFO.maxCpp1)}`;
+            const cppBasePct = Math.min(100, (calcs.cpp1 / CONSTANTS_INFO.maxCpp1) * 100);
+            document.getElementById('info-cpp-base-meter').style.width = cppBasePct + '%';
+
+            document.getElementById('info-cpp2-label').innerText = `${formatCurrency(calcs.cpp2)} / ${formatCurrency(CONSTANTS_INFO.maxCpp2)}`;
+            const cpp2Pct = Math.min(100, (calcs.cpp2 / CONSTANTS_INFO.maxCpp2) * 100);
+            document.getElementById('info-cpp2-meter').style.width = cpp2Pct + '%';
+
+            document.getElementById('info-ei-label').innerText = `${formatCurrency(calcs.totalEi)} / ${formatCurrency(CONSTANTS_INFO.maxEi)}`;
+            const eiPct = Math.min(100, (calcs.totalEi / CONSTANTS_INFO.maxEi) * 100);
+            document.getElementById('info-ei-meter').style.width = eiPct + '%';
+        }
+
+        const LAYER_DATA = {
+// ... existing code ...
+        // Run Initial State Calculations on window load
+        window.onload = function() {
+            calculateEstimator();
+            inspectLayer('bridge');
+            updateTaxInfographicUI();
+        }
+    </script>
+</body>
+</html>
